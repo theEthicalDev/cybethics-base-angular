@@ -1,0 +1,19 @@
+<div class="hover-scroll-x {{class}}">
+    <div class="d-grid">
+        <ul class="nav nav-tabs gap-1 flex-nowrap text-nowrap">
+            <li class="nav-item" *ngFor="let tabItem of tabItems; let i = index"
+                [ngClass]="{'border-danger border-3 border-bottom': tabItem.hasError$ | async}">
+                <a [ngClass]="{'text-uppercase': uppercase, 'text-danger': tabItem.hasError$ | async}"
+                   class="nav-link btn btn-active-light btn-color-gray-600 btn-active-color-primary rounded-bottom-0"
+                   [class.active]="i === activeTab"
+                   (click)="setActiveTab(i)"
+                   data-bs-toggle="tab">
+                    {{ tabItem.title.get() | translate }}
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="tab-content">
+    <ng-content></ng-content>
+</div>

@@ -1,0 +1,39 @@
+<!-- Text Input Field-->
+<app-form-control-input-field-content-text
+        *ngIf="formControlInputFieldContentParams.type == FormControlInputFieldContentType.TEXT"
+        [formControlInputFieldContentParams]="formControlInputFieldContentParams"/>
+
+<!-- Password Input Field-->
+<app-form-control-input-field-content-password
+        *ngIf="formControlInputFieldContentParams.type == FormControlInputFieldContentType.PASSWORD"
+        [formControlInputFieldContentParams]="formControlInputFieldContentParams"/>
+
+<!--  Text Area -->
+<app-form-control-input-field-content-text-area
+        *ngIf="formControlInputFieldContentParams.type == FormControlInputFieldContentType.TEXTAREA"
+        [formControlInputFieldContentParams]="formControlInputFieldContentParams"/>
+
+<!-- Number input field -->
+<app-form-control-input-field-content-number
+        *ngIf="formControlInputFieldContentParams.type == FormControlInputFieldContentType.NUMBER"
+        [formControlInputFieldContentParams]="formControlInputFieldContentParams"/>
+
+<!-- Dropdown input field -->
+<app-form-control-input-field-content-dropdown
+        *ngIf="formControlInputFieldContentParams.type == FormControlInputFieldContentType.DROPDOWN"
+        [formControlInputFieldContentParams]="formControlInputFieldContentParams"/>
+
+<!-- Date input field-->
+<app-form-control-input-field-content-date
+        *ngIf="formControlInputFieldContentParams.type == FormControlInputFieldContentType.DATE"
+        [formControlInputFieldContentParams]="formControlInputFieldContentParams"/>
+
+<!-- Date time input field-->
+<app-form-control-input-field-content-date-time
+        *ngIf="formControlInputFieldContentParams.type == FormControlInputFieldContentType.DATETIME_LOCAL"
+        [formControlInputFieldContentParams]="formControlInputFieldContentParams"/>
+
+<!-- Switch input field-->
+<app-form-control-input-field-content-switch
+        *ngIf="formControlInputFieldContentParams.type == FormControlInputFieldContentType.SWITCH"
+        [formControlInputFieldContentParams]="formControlInputFieldContentParams"/>

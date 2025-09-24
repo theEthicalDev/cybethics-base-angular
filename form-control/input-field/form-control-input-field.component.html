@@ -1,0 +1,26 @@
+<div [class]="typeWithLabelRight() ? 'd-flex align-items-end' : ''">
+    <app-form-control-input-field-label *ngIf="!typeWithLabelRight()" [formControlInputFieldLabelParams]="_labelParams"/>
+    <app-form-control-input-field-content *ngIf="!withSkeletonFn"
+            [formControlInputFieldContentParams]="_contentParams"/>
+    <span *ngIf="withSkeletonFn" [appSkeleton]="withSkeletonFn" skeleton-height="50px"></span>
+    <app-form-control-input-field-label *ngIf="typeWithLabelRight()" [formControlInputFieldLabelParams]="_labelParams"/>
+    <div *ngIf="_contentParams?.formControl?.invalid
+    && (_contentParams?.formControl?.dirty || _contentParams?.formControl?.touched)"
+         class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+        <span style="display: none" #translated [translate]="_labelParams.label.get()"></span>
+        <div *ngIf="_contentParams.formControl.hasError('required')"
+             [translate]="'VALIDATION.REQUIRED'"
+             [translateParams]="{name: translated.innerText}">
+        </div>
+        <!--  If error but no args -->
+        <div *ngIf="_contentParams.formControl.hasError('customError') && !_contentParams.formControl.hasError('args')"
+             [translate]="_contentParams.formControl.getError('customError')"
+             [translateParams]="{name: translated.innerText}">
+        </div>
+        <!--  If error and args -->
+        <div *ngIf="_contentParams.formControl.hasError('customError') && _contentParams.formControl.hasError('args')"
+             [translate]="_contentParams.formControl.getError('customError')"
+             [translateParams]="_contentParams.formControl.getError('args')">
+        </div>
+    </div>
+</div>

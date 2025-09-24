@@ -1,0 +1,138 @@
+<!--begin::Billing address-->
+<div class="d-flex flex-column gap-5 gap-md-7">
+    <app-form-control-row *ngIf="anyKeyExists(AddressFormKeyEnum.EMAIL)">
+        <app-form-control
+                [labelParams]="FormControlLabelParams.from(label(AddressFormKeyEnum.EMAIL))"
+                [contentParams]="FormControlTextParams.from(fc(AddressFormKeyEnum.EMAIL), 'beispiel@example.com')"
+                [withSkeletonFn]="(isLoading$ | async)!">
+        </app-form-control>
+        <app-form-control-column *ngIf="anyKeyExists(AddressFormKeyEnum.PASSWORD)" [columnWidth]="12">
+            <app-form-control
+                    [labelParams]="FormControlLabelParams.from(label(AddressFormKeyEnum.PASSWORD))"
+                    [contentParams]="FormControlPasswordParams.from(fc(AddressFormKeyEnum.PASSWORD), '********')"
+                    [withSkeletonFn]="(isLoading$ | async)!">
+            </app-form-control>
+        </app-form-control-column>
+        <span *ngIf="withEmailSeparator" class="separator separator-dashed separator-content my-3">{{'CHECKOUT.ADDRESS.TITLE' | translate}}</span>
+    </app-form-control-row>
+    <app-form-control-row *ngIf="anyKeyExists(AddressFormKeyEnum.ORGANIZATION)">
+        <app-form-control
+                [labelParams]="FormControlLabelParams.from(label(AddressFormKeyEnum.ORGANIZATION))"
+                [contentParams]="FormControlTextParams.from(fc(AddressFormKeyEnum.ORGANIZATION), 'The Company GmbH')"
+                [withSkeletonFn]="(isLoading$ | async)!">
+        </app-form-control>
+    </app-form-control-row>
+    <app-form-control-row *ngIf="anyKeyExists(AddressFormKeyEnum.FULL_NAME, AddressFormKeyEnum.FIRST_NAME, AddressFormKeyEnum.LAST_NAME)">
+        <app-form-control-column *ngIf="anyKeyExists(AddressFormKeyEnum.SALUTATION)" [columnWidth]="2">
+            <app-form-control
+                    [labelParams]="FormControlLabelParams.from(label(AddressFormKeyEnum.SALUTATION))"
+                    [contentParams]="FormControlTextParams.from(fc(AddressFormKeyEnum.SALUTATION), ' ')"
+                    [withSkeletonFn]="(isLoading$ | async)!">
+            </app-form-control>
+        </app-form-control-column>
+        <app-form-control-column *ngIf="anyKeyExists(AddressFormKeyEnum.FULL_NAME)" [columnWidth]="12">
+            <app-form-control
+                    [labelParams]="FormControlLabelParams.from(label(AddressFormKeyEnum.FULL_NAME))"
+                    [contentParams]="FormControlTextParams.from(fc(AddressFormKeyEnum.FULL_NAME), 'Max Mustermann')"
+                    [withSkeletonFn]="(isLoading$ | async)!">
+            </app-form-control>
+        </app-form-control-column>
+        <app-form-control-column *ngIf="anyKeyExists(AddressFormKeyEnum.FIRST_NAME)"
+                                 [columnWidth]="anyKeyExists(AddressFormKeyEnum.SALUTATION) ? 5 : 6">
+            <app-form-control
+                    [labelParams]="FormControlLabelParams.from(label(AddressFormKeyEnum.FIRST_NAME))"
+                    [contentParams]="FormControlTextParams.from(fc(AddressFormKeyEnum.FIRST_NAME), 'Max')"
+                    [withSkeletonFn]="(isLoading$ | async)!">
+            </app-form-control>
+        </app-form-control-column>
+        <app-form-control-column *ngIf="anyKeyExists(AddressFormKeyEnum.LAST_NAME)"
+                                 [columnWidth]="anyKeyExists(AddressFormKeyEnum.SALUTATION) ? 5 : 6">
+            <app-form-control
+                    [labelParams]="FormControlLabelParams.from(label(AddressFormKeyEnum.LAST_NAME))"
+                    [contentParams]="FormControlTextParams.from(fc(AddressFormKeyEnum.LAST_NAME), 'Mustermann')"
+                    [withSkeletonFn]="(isLoading$ | async)!">
+            </app-form-control>
+        </app-form-control-column>
+    </app-form-control-row>
+    <app-form-control-row *ngIf="anyKeyExists(AddressFormKeyEnum.ADDRESS,AddressFormKeyEnum.ADDRESS_2)">
+        <app-form-control-column *ngIf="anyKeyExists(AddressFormKeyEnum.ADDRESS)">
+            <app-form-control
+                    [labelParams]="FormControlLabelParams.from(label(AddressFormKeyEnum.ADDRESS))"
+                    [contentParams]="FormControlTextParams.from(fc(AddressFormKeyEnum.ADDRESS), 'Haupstrasse')"
+                    [withSkeletonFn]="(isLoading$ | async)!">
+            </app-form-control>
+        </app-form-control-column>
+        <app-form-control-column *ngIf="anyKeyExists(AddressFormKeyEnum.ADDRESS_2)">
+            <app-form-control
+                    [labelParams]="FormControlLabelParams.from(label(AddressFormKeyEnum.ADDRESS_2))"
+                    [contentParams]="FormControlTextParams.from(fc(AddressFormKeyEnum.ADDRESS_2))"
+                    [withSkeletonFn]="(isLoading$ | async)!">
+            </app-form-control>
+        </app-form-control-column>
+    </app-form-control-row>
+
+    <app-form-control-row
+            *ngIf="anyKeyExists(AddressFormKeyEnum.STREET,AddressFormKeyEnum.HOUSE_NUMBER,AddressFormKeyEnum.FLOOR)">
+        <app-form-control-column *ngIf="anyKeyExists(AddressFormKeyEnum.STREET)"
+                                 [columnWidth]="anyKeyExists(AddressFormKeyEnum.HOUSE_NUMBER) ? anyKeyExists(AddressFormKeyEnum.FLOOR) ? 8 : 10 : 12">
+            <app-form-control
+                    [labelParams]="FormControlLabelParams.from(label(AddressFormKeyEnum.STREET))"
+                    [contentParams]="FormControlTextParams.from(fc(AddressFormKeyEnum.STREET), 'Hauptstrasse')"
+                    [withSkeletonFn]="(isLoading$ | async)!">
+            </app-form-control>
+        </app-form-control-column>
+        <app-form-control-column *ngIf="anyKeyExists(AddressFormKeyEnum.HOUSE_NUMBER)" [columnWidth]="2">
+            <app-form-control
+                    [labelParams]="FormControlLabelParams.from(label(AddressFormKeyEnum.HOUSE_NUMBER))"
+                    [contentParams]="FormControlTextParams.from(fc(AddressFormKeyEnum.HOUSE_NUMBER), '1')"
+                    [withSkeletonFn]="(isLoading$ | async)!">
+            </app-form-control>
+        </app-form-control-column>
+        <app-form-control-column *ngIf="anyKeyExists(AddressFormKeyEnum.FLOOR)" [columnWidth]="2">
+            <app-form-control
+                    [labelParams]="FormControlLabelParams.from(label(AddressFormKeyEnum.FLOOR))"
+                    [contentParams]="FormControlNumberParams.from(fc(AddressFormKeyEnum.FLOOR), '3')"
+                    [withSkeletonFn]="(isLoading$ | async)!">
+            </app-form-control>
+        </app-form-control-column>
+    </app-form-control-row>
+
+    <app-form-control-row>
+        <app-form-control-column *ngIf="anyKeyExists(AddressFormKeyEnum.POSTAL_CODE)" [columnWidth]="3">
+            <app-form-control
+                    [labelParams]="FormControlLabelParams.from(label(AddressFormKeyEnum.POSTAL_CODE))"
+                    [contentParams]="FormControlNumberParams.from(fc(AddressFormKeyEnum.POSTAL_CODE), '8000')"
+                    [withSkeletonFn]="(isLoading$ | async)!">
+            </app-form-control>
+        </app-form-control-column>
+        <app-form-control-column *ngIf="anyKeyExists(AddressFormKeyEnum.CITY)" [columnWidth]="5">
+            <app-form-control
+                    [labelParams]="FormControlLabelParams.from(label(AddressFormKeyEnum.CITY))"
+                    [contentParams]="FormControlTextParams.from(fc(AddressFormKeyEnum.CITY), 'Zürich')"
+                    [withSkeletonFn]="(isLoading$ | async)!">
+            </app-form-control>
+        </app-form-control-column>
+        <app-form-control-column *ngIf="anyKeyExists(AddressFormKeyEnum.COUNTRY)" [columnWidth]="4">
+            <app-form-control
+                    [labelParams]="FormControlLabelParams.from(label(AddressFormKeyEnum.COUNTRY))"
+                    [contentParams]="FormControlDropdownParams.from(fc(AddressFormKeyEnum.COUNTRY), countryCodes, 'COUNTRY')"
+                    [withSkeletonFn]="(isLoading$ | async)!">
+            </app-form-control>
+        </app-form-control-column>
+    </app-form-control-row>
+
+<!--    <app-form-control-row *ngIf="anyKeyExists(AddressFormKeyEnum.COUNTRY)">-->
+<!--        <app-form-control-->
+<!--                [labelParams]="FormControlLabelParams.from(label(AddressFormKeyEnum.COUNTRY))"-->
+<!--                [contentParams]="FormControlDropdownParams.fromDachCountryCode(fc(AddressFormKeyEnum.COUNTRY))">-->
+<!--        </app-form-control>-->
+<!--    </app-form-control-row>-->
+
+    <app-form-control-row *ngIf="anyKeyExists(AddressFormKeyEnum.IS_BILLING_EQUAL)" class="mt-0">
+        <app-form-control
+                [labelParams]="FormControlLabelParams.from(label(AddressFormKeyEnum.IS_BILLING_EQUAL))"
+                [contentParams]="FormControlSwitchParams.from(fc(AddressFormKeyEnum.IS_BILLING_EQUAL))"
+                [withSkeletonFn]="(isLoading$ | async)!">
+        </app-form-control>
+    </app-form-control-row>
+</div>

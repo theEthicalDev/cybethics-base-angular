@@ -1,0 +1,15 @@
+export enum FormControlInputFieldContentType {
+  TEXT = 'text',
+  NUMBER = 'number',
+  DATE = 'date',
+  DATETIME_LOCAL = 'datetime-local',
+  SWITCH = 'switch',
+  SELECT = 'select',
+  CHECKBOX = 'checkbox',
+  RADIO = 'radio',
+  TEXTAREA = 'textarea',
+  FILE = 'file',
+  PASSWORD = 'password',
+  DROPDOWN = 'dropdown',
+  MULTI_SELECT = 'multi-select',
+}

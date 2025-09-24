@@ -1,0 +1,67 @@
+<div class="col-12 pb-10 pt-md-5 pt-1">
+    <div class="py-5 px-4">
+        <div class="row justify-content-around">
+            <div *ngFor="let step of steps; index as i" class="col p-0">
+                <div class="d-block text-center">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="col">
+                            <span class="separator separator-dashed separator-primary" *ngIf="i !== 0"></span>
+                        </div>
+                        <!-- Stepper Item Symbol -->
+                        <div class="symbol symbol-circle symbol-35px symbol-md-50px" *ngIf="currentStep > i">
+                            <span class="symbol-label bg-success border-1 text-white fs-5 fs-md-3-bold"
+                                  [ngClass]="{'clickable': !isCompleted()}"
+                                  (click)="changeStepTo(i)"
+                                  *ngIf="currentStep > i">
+                                <app-keenicon name="check" class="fs-1" color="text-inverse-success"></app-keenicon>
+                            </span>
+                        </div>
+                        <div class="symbol symbol-circle symbol-35px symbol-md-50px" *ngIf="currentStep === i">
+                            <span class="symbol-label text-white fs-md-2 fs-4 fw-bold clickable"
+                                  [ngClass]="{'bg-primary': !hasError(), 'bg-danger': hasError()}"
+                                  (click)="changeStepTo(i)"
+                                  *ngIf="currentStep === i">{{ i + 1 }}
+                            </span>
+                        </div>
+                        <div class="symbol symbol-circle symbol-35px symbol-md-50px" *ngIf="currentStep < i">
+                            <span class="symbol-label border-dashed border-primary border-1 text-dark fs-5 fs-md-3 fw-semibold"
+                                  *ngIf="currentStep < i">{{ i + 1 }}</span>
+                        </div>
+                        <div class="col">
+                            <span class="separator separator-dashed separator-primary" *ngIf="i !== steps.length - 1"></span>
+                        </div>
+                    </div>
+                    <!-- Stepper Item Title & Description -->
+                    <div class="d-grid align-items-center pt-3">
+                            <span class="fs-6 fs-md-3 fw-bold">
+                                {{ (step.get() | translate) !== step.get() ? (step.get() | translate) : (('GENERAL.STEP' | translate) + ' ') + (i + 1) }}
+                            </span>
+                        <span class="fs-6 fw-light text-balance">
+                                {{ (descriptionKey(step) | translate) !== descriptionKey(step) ? (step.get() | translate) : '' }}
+                            </span>
+                    </div>
+                </div>
+                <!--        {{step.get() | json}}-->
+            </div>
+        </div>
+    </div>
+    <div>
+        <ng-content></ng-content>
+        <div class="d-flex gap-5 pt-5">
+            <app-reactive-button class="col" *ngIf="!isFirstStep()"
+                                 styleClass="btn-secondary w-100"
+                                 [disabled]="isCompleted()"
+                                 [translation]="Translation.from('GENERAL.BACK')"
+                                 (clicked)="changeStepTo(currentStep - 1)">
+            </app-reactive-button>
+            <app-reactive-button class="col"
+                                 styleClass="w-100 {{ isLastStep() || isCompleted() ? 'btn-success' : 'btn-primary' }}"
+                                 [disabled]="isCompleted() || showButtonLoading"
+                                 [isLoading]="showButtonLoading"
+                                 [withConfirmation]="isLastStep() ? withConfirmation : false"
+                                 [translation]="isLastStep() ? submitLabel : Translation.from('GENERAL.NEXT')"
+                                 (clicked)="validateAndContinue()">
+            </app-reactive-button>
+        </div>
+    </div>
+</div>

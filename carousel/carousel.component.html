@@ -1,0 +1,19 @@
+<div *ngIf="slides && slides.length > 0" class="carousel" [style.aspect-ratio]="aspectRatio">
+    <div class="prev" *ngIf="showArrows && slides && slides.length > 1" (click)="previousSlide()">&#10094;</div>
+    <div class="slideshow-container">
+        <div class="mySlides" *ngFor="let slide of slides; let i = index" [class.active]="slideIndex === i">
+            <img src="{{slide.image}}"
+                 alt="{{slide.title}}"
+                 [style.width]="imgWidth"
+                 [style.height]="imgHeight">
+            <div class="text" *ngIf="slide?.caption?.length ?? 0 > 0">{{ slide.caption }}</div>
+        </div>
+        <div class="d-flex justify-content-center" *ngIf="showDots && slides && slides.length > 1">
+            <span class="dot"
+                  *ngFor="let slide of slides; let i = index"
+                  (click)="showSlides(i)"
+                  [class.active]="slideIndex === i"></span>
+        </div>
+    </div>
+    <div class="next" *ngIf="showArrows && slides && slides.length > 1" (click)="nextSlide()">&#10095;</div>
+</div>

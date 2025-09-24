@@ -1,0 +1,37 @@
+<span class="separator separator-dashed my-5" *ngIf="showPagination"></span>
+<div class="row" *ngIf="showPagination">
+    <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start dt-toolbar">
+        <div>
+            <select name="kt_project_users_table_length" aria-controls="kt_project_users_table"
+                    class="form-select form-select-solid form-select-sm" id="dt-length-1" #pageSize (change)="changePageSize(pageSize.value)">
+                <option *ngFor="let option of options" [value]="option">{{ option }}</option>
+            </select><label for="dt-length-1"></label>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
+        <div class="dt-paging paging_simple_numbers">
+            <ul class="pagination">
+                <li class="dt-paging-button page-item clickable"
+                    [class.disabled]="currentPage == 1"
+                    [class.clickable]="currentPage > 1"
+                    (click)="changeCurrentPage(currentPage - 1)">
+                    <a class="page-link previous" aria-controls="kt_project_users_table"><i
+                            class="previous"></i></a></li>
+                <li *ngFor="let page of pages" class="dt-paging-button page-item clickable" [class.active]="page === currentPage"
+                    (click)="changeCurrentPage(page)">
+                    <a class="page-link"
+                       aria-controls="kt_project_users_table" aria-current="page"
+                       tabindex="{{page}}">{{ page }}
+                    </a>
+                </li>
+                <li class="dt-paging-button page-item clickable"
+                    [class.disabled]="currentPage == totalPages"
+                    [class.clickable]="currentPage < totalPages"
+                    (click)="changeCurrentPage(currentPage + 1)">
+                    <a class="page-link next" aria-controls="kt_project_users_table"><i
+                            class="next"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

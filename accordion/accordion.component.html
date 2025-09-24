@@ -1,0 +1,23 @@
+<div class="accordion accordion-icon-toggle" id="kt_accordion_2">
+    <div [class.mb-5]="isFreeStyle()" [class.accordion-item]="isFramedStyle()" *ngFor="let item of items; let i = index">
+        <div class="accordion-header d-flex" [class.py-2]="isFreeStyle()" data-bs-target="#kt_accordion_2_item_1"
+             [class.collapsed]="!item.open" (click)="toggle(i)">
+            <span class="accordion-icon" *ngIf="isFreeStyle()">
+                <i class="ki-duotone ki-arrow-right fs-4"><span class="path1"></span><span class="path2"></span></i>
+            </span>
+            <button class="fs-4 fw-semibold accordion-button" [class.collapsed]="!item.open" *ngIf="isFramedStyle()"
+                    type="button" data-bs-toggle="collapse" data-bs-target="#kt_accordion_1_body_1" aria-expanded="true" aria-controls="kt_accordion_1_body_1">
+                {{ item.title }}
+            </button>
+            <h3 class="fs-4 fw-semibold mb-0 ms-4" *ngIf="isFreeStyle()">
+                {{ item.title }}
+            </h3>
+        </div>
+
+        <div id="kt_accordion_2_item_1" class="fs-6 collapse ps-10" data-bs-parent="#kt_accordion_2" [class.show]="item.open">
+            <p class="mb-0" [class.accordion-body]="isFramedStyle()">
+                {{ item.content }}
+            </p>
+        </div>
+    </div>
+</div>

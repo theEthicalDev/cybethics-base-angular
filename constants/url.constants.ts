@@ -1,0 +1,142 @@
+// URLs without leading slashes
+export const URLS_SHORT = {
+  AUTH: {
+    TITLE: 'auth',
+    LOGIN: 'auth/login',
+    REGISTER: 'auth/registration',
+    FORGOT_PASSWORD: 'auth/forgot-password',
+    INIT_PASSWORD: 'auth/init',
+    LOGOUT: 'auth/logout',
+  },
+  ERROR: {
+    TITLE: 'error',
+    NOT_FOUND: 'error/404',
+    SERVER_ERROR: 'error/500',
+  },
+  ABOUT: {
+    TITLE: 'about',
+    TERMS: 'about/terms',
+    IMPRINT: 'about/imprint',
+    PRIVACY: 'about/privacy',
+  },
+  SHOP: {
+    TITLE: 'shop',
+    CHECKOUT: 'shop/checkout',
+    CHECKOUT_SIMULATION: 'shop/checkout/simulation',
+    CHECKOUT_SUCCESS_REGISTER: 'shop/checkout/success/register', // CAUTION: this path is used in the backend
+    CHECKOUT_SUCCESS: 'shop/checkout/success', // CAUTION: this path is used in the backend
+    CHECKOUT_ERROR: 'shop/checkout/error', // CAUTION: this path is used in the backend
+    PRODUCT: 'shop/product',
+    PRODUCT_DETAIL: 'shop/product/detail',
+  },
+  ADMINISTRATION: {
+    TITLE: 'administration',
+    USERS: 'administration/users',
+    ORDER: 'administration/order',
+    ORDER_DETAIL: 'administration/order/detail',
+    SETTINGS: 'administration/settings',
+    PRODUCT: 'administration/product',
+    PRODUCT_DETAIL: 'administration/product/detail',
+    DISCOUNT: 'administration/discount',
+    DISCOUNT_DETAIL: 'administration/discount/detail',
+    VOUCHER_TITLE: 'voucher',
+    VOUCHER: 'administration/voucher',
+    VOUCHER_DETAIL: 'administration/voucher/detail',
+    VOUCHER_CATEGORY: 'administration/voucher/category',
+    VOUCHER_REDEMPTION: 'administration/voucher/redemption',
+  }
+}
+
+// URLs with leading slashes but without trailing slashes
+export const URLS = {
+  HOME: '/',
+  AUTH: {
+    LOGIN: `/${URLS_SHORT.AUTH.LOGIN}`,
+    REGISTER: `/${URLS_SHORT.AUTH.REGISTER}`,
+    FORGOT_PASSWORD: `/${URLS_SHORT.AUTH.FORGOT_PASSWORD}`,
+    INIT_PASSWORD: `/${URLS_SHORT.AUTH.INIT_PASSWORD}`,
+    LOGOUT: `/${URLS_SHORT.AUTH.LOGOUT}`,
+  },
+  ERROR: {
+    TITLE: `/${URLS_SHORT.ERROR.TITLE}`,
+    NOT_FOUND: `/${URLS_SHORT.ERROR.NOT_FOUND}`,
+    SERVER_ERROR: `/${URLS_SHORT.ERROR.SERVER_ERROR}`,
+  },
+  ABOUT: {
+    TITLE: `/${URLS_SHORT.ABOUT.TITLE}`,
+    TERMS: `/${URLS_SHORT.ABOUT.TERMS}`,
+    IMPRINT: `/${URLS_SHORT.ABOUT.IMPRINT}`,
+    PRIVACY: `/${URLS_SHORT.ABOUT.PRIVACY}`,
+  },
+  SHOP: {
+    CHECKOUT: `/${URLS_SHORT.SHOP.CHECKOUT}`,
+    CHECKOUT_SIMULATION: `/${URLS_SHORT.SHOP.CHECKOUT_SIMULATION}`,
+    CHECKOUT_SUCCESS_REGISTER: `/${URLS_SHORT.SHOP.CHECKOUT_SUCCESS_REGISTER}`, // CAUTION: this path is used in the backend
+    CHECKOUT_SUCCESS: `/${URLS_SHORT.SHOP.CHECKOUT_SUCCESS}`, // CAUTION: this path is used in the backend
+    CHECKOUT_ERROR: `/${URLS_SHORT.SHOP.CHECKOUT_ERROR}`, // CAUTION: this path is used in the backend
+    PRODUCT: `/${URLS_SHORT.SHOP.PRODUCT}`,
+    PRODUCT_DETAIL: `/${URLS_SHORT.SHOP.PRODUCT_DETAIL}`,
+  },
+  ADMINISTRATION: {
+    USERS: `/${URLS_SHORT.ADMINISTRATION.USERS}`,
+    ORDER: `/${URLS_SHORT.ADMINISTRATION.ORDER}`,
+    ORDER_DETAIL: `/${URLS_SHORT.ADMINISTRATION.ORDER_DETAIL}`,
+    SETTINGS: `/${URLS_SHORT.ADMINISTRATION.SETTINGS}`,
+    PRODUCT: `/${URLS_SHORT.ADMINISTRATION.PRODUCT}`,
+    PRODUCT_DETAIL: `/${URLS_SHORT.ADMINISTRATION.PRODUCT_DETAIL}`,
+    DISCOUNT: `/${URLS_SHORT.ADMINISTRATION.DISCOUNT}`,
+    DISCOUNT_DETAIL: `/${URLS_SHORT.ADMINISTRATION.DISCOUNT_DETAIL}`,
+    VOUCHER_TITLE: `/${URLS_SHORT.ADMINISTRATION.VOUCHER_TITLE}`,
+    VOUCHER: `/${URLS_SHORT.ADMINISTRATION.VOUCHER}`,
+    VOUCHER_DETAIL: `/${URLS_SHORT.ADMINISTRATION.VOUCHER_DETAIL}`,
+    VOUCHER_CATEGORY: `/${URLS_SHORT.ADMINISTRATION.VOUCHER_CATEGORY}`,
+    VOUCHER_REDEMPTION: `/${URLS_SHORT.ADMINISTRATION.VOUCHER_REDEMPTION}`,
+  }
+}
+
+// URLs with leading and trailing slashes
+export const URLS_FULL = {
+  HOME: '/',
+  AUTH: {
+    LOGIN: `/${URLS_SHORT.AUTH.LOGIN}/`,
+    REGISTER: `/${URLS_SHORT.AUTH.REGISTER}/`,
+    FORGOT_PASSWORD: `/${URLS_SHORT.AUTH.FORGOT_PASSWORD}/`,
+    INIT_PASSWORD: `/${URLS_SHORT.AUTH.INIT_PASSWORD}/`,
+    LOGOUT: `/${URLS_SHORT.AUTH.LOGOUT}/`,
+  },
+  ERROR: {
+    TITLE: `/${URLS_SHORT.ERROR.TITLE}/`,
+    NOT_FOUND: `/${URLS_SHORT.ERROR.NOT_FOUND}/`,
+    SERVER_ERROR: `/${URLS_SHORT.ERROR.SERVER_ERROR}/`,
+  },
+  ABOUT: {
+    TITLE: `/${URLS_SHORT.ABOUT.TITLE}/`,
+    TERMS: `/${URLS_SHORT.ABOUT.TERMS}/`,
+    IMPRINT: `/${URLS_SHORT.ABOUT.IMPRINT}/`,
+    PRIVACY: `/${URLS_SHORT.ABOUT.PRIVACY}/`,
+  },
+  SHOP: {
+    CHECKOUT: `/${URLS_SHORT.SHOP.CHECKOUT}/`,
+    CHECKOUT_SIMULATION: `/${URLS_SHORT.SHOP.CHECKOUT_SIMULATION}/`,
+    CHECKOUT_SUCCESS_REGISTER: `/${URLS_SHORT.SHOP.CHECKOUT_SUCCESS_REGISTER}/`, // CAUTION: this path is used in the backend
+    CHECKOUT_SUCCESS: `/${URLS_SHORT.SHOP.CHECKOUT_SUCCESS}/`, // CAUTION: this path is used in the backend
+    CHECKOUT_ERROR: `/${URLS_SHORT.SHOP.CHECKOUT_ERROR}/`, // CAUTION: this path is used in the backend
+    PRODUCT: `/${URLS_SHORT.SHOP.PRODUCT}/`,
+    PRODUCT_DETAIL: `/${URLS_SHORT.SHOP.PRODUCT_DETAIL}/`,
+  },
+  ADMINISTRATION: {
+    USERS: `/${URLS_SHORT.ADMINISTRATION.USERS}/`,
+    ORDER: `/${URLS_SHORT.ADMINISTRATION.ORDER}/`,
+    ORDER_DETAIL: `/${URLS_SHORT.ADMINISTRATION.ORDER_DETAIL}/`,
+    SETTINGS: `/${URLS_SHORT.ADMINISTRATION.SETTINGS}/`,
+    PRODUCT: `/${URLS_SHORT.ADMINISTRATION.PRODUCT}/`,
+    PRODUCT_DETAIL: `/${URLS_SHORT.ADMINISTRATION.PRODUCT_DETAIL}/`,
+    DISCOUNT: `/${URLS_SHORT.ADMINISTRATION.DISCOUNT}/`,
+    DISCOUNT_DETAIL: `/${URLS_SHORT.ADMINISTRATION.DISCOUNT_DETAIL}/`,
+    VOUCHER_TITLE: `/${URLS_SHORT.ADMINISTRATION.VOUCHER_TITLE}/`,
+    VOUCHER: `/${URLS_SHORT.ADMINISTRATION.VOUCHER}/`,
+    VOUCHER_DETAIL: `/${URLS_SHORT.ADMINISTRATION.VOUCHER_DETAIL}/`,
+    VOUCHER_CATEGORY: `/${URLS_SHORT.ADMINISTRATION.VOUCHER_CATEGORY}/`,
+    VOUCHER_REDEMPTION: `/${URLS_SHORT.ADMINISTRATION.VOUCHER_REDEMPTION}/`,
+  }
+}

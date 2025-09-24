@@ -1,0 +1,13 @@
+<select *ngIf="_formControlInputFieldContentParams && _formControlInputFieldContentParams.formControl"
+        [formControl]="_formControlInputFieldContentParams.formControl"
+        [compareWith]="_formControlInputFieldContentParams.formControl.value ? _formControlInputFieldContentParams.compareWithFn : defaultCompareWithFn"
+        [class]="_formControlInputFieldContentParams.styling.cssClass" #selectElement>
+    <option *ngIf="_formControlInputFieldContentParams.emptyOption"
+            [value]="null"
+            selected>
+        {{ _formControlInputFieldContentParams.emptyOption.get() | translate }}</option>
+    <option *ngFor="let option of _formControlInputFieldContentParams.optionsMap.entries()"
+            [ngValue]="option[0]">
+        {{ option[1].get() | translate}}
+    </option>
+</select>

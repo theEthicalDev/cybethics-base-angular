@@ -1,0 +1,2 @@
+<img *ngIf="(imageService.image$ | async) && (imageService.image$ | async) !== 'data:image/png;base64,'" [src]="imageService.image$ |
+async" [class]="classes ? classes : 'responsive-image'" alt="Logo" [style]="imgStyle"/>

@@ -1,0 +1,8 @@
+<app-modal #modalComponent
+           [modalConfig]="{modalTitle: Translation.from('GENERAL.ARE_YOU_SURE_TITLE'), closeButtonLabel: 'GENERAL.YES',
+                           dismissButtonLabel: 'GENERAL.NO'}">
+    <div class="d-grid gap-5" style="place-items: center">
+        <app-keenicon [name]="'question-2'" class="fs-5tx text-warning"></app-keenicon>
+        <span class="fw-semibold fs-3" translate="GENERAL.ARE_YOU_SURE_INFO"></span>
+    </div>
+</app-modal>

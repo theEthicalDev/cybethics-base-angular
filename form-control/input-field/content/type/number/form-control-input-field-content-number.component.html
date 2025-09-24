@@ -1,0 +1,22 @@
+<div class="input-group input-group-solid">
+    <input [formControl]="_formControlInputFieldContentParams.formControl"
+           [type]="_formControlInputFieldContentParams.type"
+           [class]="_formControlInputFieldContentParams.styling.cssClass"
+           [placeholder]="_formControlInputFieldContentParams.placeholder.get() | translate"/>
+
+    <span class="input-group-text" *ngIf="_formControlInputFieldContentParams.icon">
+        <app-keenicon *ngIf="_formControlInputFieldContentParams.icon.type === 'keenIcon'"
+                      [name]="_formControlInputFieldContentParams.icon.icon"
+                      [class]="_formControlInputFieldContentParams.icon.cssClass"
+                      [type]="_formControlInputFieldContentParams.icon.model"
+                      [color]="_formControlInputFieldContentParams.icon.color"
+                      (click)="_formControlInputFieldContentParams.icon.clicked($event)">
+        </app-keenicon>
+
+        <i *ngIf="_formControlInputFieldContentParams.icon.type === 'bootstrap'"
+           [ngClass]="[_formControlInputFieldContentParams.icon.icon, _formControlInputFieldContentParams.icon.color,
+           _formControlInputFieldContentParams.icon.model,
+           _formControlInputFieldContentParams.icon.cssClass]">
+        </i>
+    </span>
+</div>
