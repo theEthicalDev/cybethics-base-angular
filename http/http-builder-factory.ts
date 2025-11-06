@@ -7,6 +7,7 @@ import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {PageableFilter} from '../pagination/pageable-filter';
 import {ServiceState} from '../base-service/service-state';
+import {menuReinitialization} from 'src/app/_metronic/kt/kt-helpers';
 
 @Injectable({providedIn: 'root'})
 export class HttpBuilderFactory {
@@ -293,6 +294,7 @@ class HttpBuilder {
       }),
       tap(() => {
         this.handleOnComplete();
+        this.reloadKtComponents();
       })
     );
     return this;
@@ -421,5 +423,14 @@ class HttpBuilder {
     if (this.onCompleteCallback) {
       this.onCompleteCallback();
     }
+  }
+
+  /**
+   * Reload KT components to reflect possible changes in the menu after certain operations. Otherwise, the KT items may be buggy,
+   * e.g. the dropdown menu may not update correctly, which leads to a wrong page redirect when pressing the Metronic dropdown menu items.
+   * By executing menu reinitialization here, we fix most of these issues.
+   */
+  private reloadKtComponents(): void {
+    menuReinitialization()
   }
 }

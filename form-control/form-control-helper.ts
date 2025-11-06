@@ -19,6 +19,14 @@ export function fcFromFaByFilter(formArray: FormArray, filter: (control: any) =>
   return formArray.controls.find(filter) as FormGroup | undefined;
 }
 
+/**
+ * Builds a form control ID by joining the provided arguments with slashes. This is just an internal ID to
+ * identify or map form controls and has no other meaning, so it doesn't need to be stored in the backend in most cases.
+ */
+export function buildFcId(...args: string[]): string {
+  const preparedArgs = args.map(arg => arg.trim().toLowerCase().replace(/\s+/g, '-'));
+  return preparedArgs.join('.');
+}
 
 export function validateFormGroup(formGroup: FormGroup, extraToastr: ExtraToastrService, translateService: TranslateService, translateKeyPrefix: string) {
   updateValueAndValidityRecursively(formGroup);

@@ -31,6 +31,7 @@ function getEnumKeyByValue<T extends object>(enumObj: T, value: string): keyof T
 }
 
 export function createAddressFormGroup(formBuilder: FormBuilder, address: Address): FormGroup {
+  if (!address) return formBuilder.group({});
   return formBuilder.group({
     [AddressFormKeyEnum.EMAIL]: [address.email, Validators.required],
     [AddressFormKeyEnum.ORGANIZATION]: [address.organization],

@@ -2,6 +2,10 @@ import {Selectable} from './selectable';
 
 export class SelectableHelper {
 
+  static findSelectedItem(selectables: Array<Selectable>): Selectable | undefined {
+    return selectables.find(selectable => selectable.isSelected);
+  }
+
   static isAnyButNotAllSelected(selectables: Array<Selectable>): boolean {
     return selectables.some(selectable => selectable.isSelected) && !this.isAllSelected(selectables);
   }
