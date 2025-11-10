@@ -253,8 +253,8 @@ export enum CountryCode {
   ZA = "ZA", // South Africa
   ZM = "ZM", // Zambia
   ZW = "ZW", // Zimbabwe
-  // HK = "HK", // Hong Kong (*)
-  // XK = "XK", // Kosovo(*) United Nations Security Council Resolution 1244/99
-  // TW = "TW", // Taiwan (*)
-  // EH = "EH", // Western Sahara (*)
+  HK = "HK", // Hong Kong (*)
+  XK = "XK", // Kosovo(*) United Nations Security Council Resolution 1244/99
+  TW = "TW", // Taiwan (*)
+  EH = "EH", // Western Sahara (*)
 }

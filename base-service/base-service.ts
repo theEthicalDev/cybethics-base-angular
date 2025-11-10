@@ -2,10 +2,10 @@ import {Observable, Subject, Subscription} from 'rxjs';
 import {Injectable, Injector} from '@angular/core';
 import {environment} from 'src/environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {ExtraToastrService} from '../extra-toastr/extra-toastr.service';
-import {BusinessException} from '../exception/business.exception';
+import {ExtraToastrService} from 'src/app/shared/extra-toastr/extra-toastr.service';
+import {BusinessException} from 'src/app/shared/exception/business.exception';
 import {Router} from '@angular/router';
-import {HttpBuilderFactory} from '../http/http-builder-factory';
+import {HttpBuilderFactory} from 'src/app/shared/http/http-builder-factory';
 
 @Injectable({
   providedIn: 'root'

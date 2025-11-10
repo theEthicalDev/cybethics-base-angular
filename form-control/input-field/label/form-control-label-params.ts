@@ -1,4 +1,4 @@
-import {FormControlInputFieldLabelStyling, StandardFormControlInputFieldLabelStyling} from './form-control-input-field-label-styling';
+import {FormControlInputFieldLabelStyling, StandardFormControlInputFieldLabelStyling} from 'src/app/shared/form-control/input-field/label/form-control-input-field-label-styling';
 import {MandatoryDefaultTranslation, Translation} from '../../../translation/translation';
 
 export class FormControlLabelParams {

@@ -1,5 +1,5 @@
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Address} from './address';
+import {Address} from 'src/app/shared/address/address';
 
 export enum AddressFormKeyEnum {
   ORGANIZATION = 'organization',

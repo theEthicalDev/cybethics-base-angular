@@ -1,4 +1,4 @@
-import {FormControlInputFieldStyling} from '../form-control-input-field-styling';
+import {FormControlInputFieldStyling} from 'src/app/shared/form-control/input-field/form-control-input-field-styling';
 
 export interface FormControlInputFieldContentStyling extends FormControlInputFieldStyling {
 }

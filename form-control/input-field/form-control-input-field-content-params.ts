@@ -1,16 +1,16 @@
 import {AbstractControl, FormControl} from '@angular/forms';
-import {FormControlInputFieldContentType} from './content/type/form-control-input-field-content-type';
+import {FormControlInputFieldContentType} from 'src/app/shared/form-control/input-field/content/type/form-control-input-field-content-type';
 import {
   FormControlInputFieldContentStyling,
   StandardFormControlInputFieldContentStyling,
   StandardFormControlInputFieldContentSwitchStyling,
   StandardFormControlInputFieldDropdownStyling
-} from './content/form-control-input-field-label-styling';
-import {FormControlInputFieldStyling} from './form-control-input-field-styling';
-import {FormControlInputFieldContentParamIcon} from './form-control-input-field-content-param-icon';
+} from 'src/app/shared/form-control/input-field/content/form-control-input-field-label-styling';
+import {FormControlInputFieldStyling} from 'src/app/shared/form-control/input-field/form-control-input-field-styling';
+import {FormControlInputFieldContentParamIcon} from 'src/app/shared/form-control/input-field/form-control-input-field-content-param-icon';
 import {CountryCode, DachRegionCountryCode} from './utils/constants/country-code';
-import {MaritalStatus} from './utils/constants/marital-status';
-import {SwissVisa} from './utils/constants/swiss-visa';
+import {MaritalStatus} from 'src/app/shared/form-control/input-field/utils/constants/marital-status';
+import {SwissVisa} from 'src/app/shared/form-control/input-field/utils/constants/swiss-visa';
 import {NoTranslation, PlaceholderDefaultTranslation, Translation} from '../../translation/translation';
 
 export abstract class FormControlInputFieldContentParams {

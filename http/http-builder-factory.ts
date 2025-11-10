@@ -1,12 +1,12 @@
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {ExtraToastrService} from '../extra-toastr/extra-toastr.service';
-import {Observable, Subject, Subscription, tap, throwError} from 'rxjs';
+import {ExtraToastrService} from 'src/app/shared/extra-toastr/extra-toastr.service';
+import {firstValueFrom, Observable, Subject, Subscription, tap, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
-import {BusinessException, ExceptionCode} from '../exception/business.exception';
+import {BusinessException, ExceptionCode} from 'src/app/shared/exception/business.exception';
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import {PageableFilter} from '../pagination/pageable-filter';
-import {ServiceState} from '../base-service/service-state';
+import {PageableFilter} from 'src/app/shared/pagination/pageable-filter';
+import {ServiceState} from 'src/app/shared/base-service/service-state';
 import {menuReinitialization} from 'src/app/_metronic/kt/kt-helpers';
 
 @Injectable({providedIn: 'root'})
@@ -320,6 +320,11 @@ class HttpBuilder {
 
   observable() {
     return this.subscribePreparation();
+  }
+
+  promise(): () => Promise<any> {
+    const finalObservable = this.subscribePreparation();
+    return () => firstValueFrom(finalObservable);
   }
 
   private subscribePreparation() {

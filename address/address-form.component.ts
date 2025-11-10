@@ -6,12 +6,12 @@ import {
   FormControlPasswordParams,
   FormControlSwitchParams,
   FormControlTextParams,
-} from '../form-control/input-field/form-control-input-field-content-params';
-import {AddressFormKeyEnum, label} from './address-form-key-enum';
+} from 'src/app/shared/form-control/input-field/form-control-input-field-content-params';
+import {AddressFormKeyEnum, label} from 'src/app/shared/address/address-form-key-enum';
 import {BehaviorSubject} from 'rxjs';
-import {Translation} from '../translation/translation';
+import {Translation} from 'src/app/shared/translation/translation';
 import {fc} from '../form-control/form-control-helper';
-import {FormControlLabelParams} from '../form-control/input-field/label/form-control-label-params';
+import {FormControlLabelParams} from 'src/app/shared/form-control/input-field/label/form-control-label-params';
 import {CountryCode} from '../form-control/input-field/utils/constants/country-code';
 
 @Component({

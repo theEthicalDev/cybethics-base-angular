@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {Translation} from '../../translation/translation';
+import {Translation} from 'src/app/shared/translation/translation';
 
 @Component({
   selector: 'app-tab-item',
