@@ -1,21 +1,25 @@
 <button type="submit"
-        [class]="'btn ' + styleClass + ' position-relative'"
+        [class]="'btn ' + styleClass + ' position-relative reactive-btn ' + (softConfirmActive ? 'soft-confirm-active' : '')"
+        [ngStyle]="softConfirmActive ? {'background-color':'#2f855a', 'color': '#ffffff'} : null"
         class="btn btn-primary position-relative"
-        style="width: inherit; height: 3.5rem;"
+        style="width: inherit; height: 3.5rem; overflow: hidden;"
         (click)="click()"
         [disabled]="_disabled">
     <!--begin::Indicator label-->
     <span class="indicator-label d-flex justify-content-center align-items-center">
-<!--        <app-keenicon *ngIf="iconParams"-->
-<!--                      [inputParams]="KeeniconInputParams.forReactiveButton('check-circle', iconParams.class, iconParams.color, iconParams.type)"-->
-<!--                      [@fadeOut]="(animateConfirmation$ | async)">-->
-<!--        </app-keenicon>-->
-<!--        <app-keenicon *ngIf="iconParams"-->
-<!--                      [inputParams]="iconParams"-->
-<!--                      [@fadeIn]="!(animateConfirmation$ | async)">-->
-<!--        </app-keenicon>-->
         <app-keenicon *ngIf="iconParams" [inputParams]="iconParams"></app-keenicon>
-        <span *ngIf="!_isLoading" [innerHTML]="translation | translateFallback"></span>
+
+        <div class="btn-carousel" aria-hidden="false">
+            <div class="carousel-track">
+                <div class="carousel-item">
+                    <span class="btn-text">{{ (! _isLoading) ? (translation | translateFallback) : '' }}</span>
+                </div>
+                <div class="carousel-item">
+                    <span class="btn-confirm-text">{{ 'GENERAL.ARE_YOU_SURE_SHORT' | translate }}</span>
+                </div>
+            </div>
+        </div>
+
         <div *ngIf="_isLoading" class="spinner-border spinner-border-md position-absolute" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
