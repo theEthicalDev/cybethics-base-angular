@@ -11,3 +11,9 @@ export function setCurrentLang(translationService: TranslationService, lang: str
     }
   });
 }
+
+export function isCurrentLang(translationService: TranslationService, lang: string | undefined): boolean {
+  const defaultLang = translationService.getSelectedLanguage();
+  const selectedLang = translationService.getSelectedLanguage();
+  return !!lang ? lang === selectedLang : defaultLang === selectedLang;
+}
