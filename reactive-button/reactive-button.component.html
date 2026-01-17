@@ -14,7 +14,7 @@
                 <div class="carousel-item">
                     <span class="btn-text">{{ (! _isLoading) ? (translation | translateFallback) : '' }}</span>
                 </div>
-                <div class="carousel-item">
+                <div class="carousel-item" *ngIf="withSoftConfirmation">
                     <span class="btn-confirm-text">{{ 'GENERAL.ARE_YOU_SURE_SHORT' | translate }}</span>
                 </div>
             </div>
