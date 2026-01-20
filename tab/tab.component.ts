@@ -1,6 +1,7 @@
-import {AfterContentInit, Component, ContentChildren, Input, QueryList} from '@angular/core';
+import {AfterContentInit, Component, ContentChildren, Input, OnDestroy, QueryList} from '@angular/core';
 import {ExtraToastrService} from '../extra-toastr/extra-toastr.service';
 import {TabItemComponent} from './tab-item/tab-item.component';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-tab',
@@ -8,7 +9,7 @@ import {TabItemComponent} from './tab-item/tab-item.component';
   styleUrls: ['./tab.component.scss'],
   standalone: false,
 })
-export class TabComponent implements AfterContentInit {
+export class TabComponent implements AfterContentInit, OnDestroy {
 
   @Input()
   public uppercase: boolean = false;
@@ -23,15 +24,38 @@ export class TabComponent implements AfterContentInit {
 
   @ContentChildren(TabItemComponent) tabItems: QueryList<TabItemComponent>;
 
+  private tabItemsSub: Subscription | null = null;
+
   constructor(private extraToastr: ExtraToastrService) {
   }
 
   ngAfterContentInit(): void {
-    if (this.tabItems.length < this.minTabs || this.tabItems.length > this.maxTabs) {
+    // initial validation + set active
+    this.validateAndActivate();
+
+    // handle dynamic changes to the content children (add/remove tabs at runtime)
+    this.tabItemsSub = this.tabItems.changes.subscribe(() => {
+      this.validateAndActivate();
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.tabItemsSub) {
+      this.tabItemsSub.unsubscribe();
+      this.tabItemsSub = null;
+    }
+  }
+
+  private validateAndActivate() {
+    const length = this.tabItems ? this.tabItems.length : 0;
+    if (length < this.minTabs || length > this.maxTabs) {
       console.error('Tab items length must be between ' + this.minTabs + ' and ' + this.maxTabs);
       return this.extraToastr.error();
     }
-    this.setActiveTab(this.activeTab);
+
+    // clamp activeTab into range
+    const active = Math.max(0, Math.min(this.activeTab || 0, length - 1));
+    this.setActiveTab(active);
   }
 
   setActiveTab(targetTabIndex: number) {
