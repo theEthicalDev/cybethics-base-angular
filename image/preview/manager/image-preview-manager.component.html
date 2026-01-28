@@ -2,13 +2,12 @@
      (click)="$event.stopPropagation()"
      data-kt-image-input="true">
     <!--begin::Preview existing avatar-->
-    <div class="image-input-wrapper w-200px h-200px bgi-position-y-center" [style.background-size]="'contain'"
+    <div class="image-input-wrapper w-200px h-200px bgi-position-y-center bgi-position-x-center" [style.background-size]="'contain'"
          [style]="'background-image: url(' + image + ');'"></div>
     <!--end::Preview existing avatar-->
 
     <!--begin::Label-->
-    <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" *ngIf="!hideEditButton"
-           (click)="onEdit.emit()"
+    <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" *ngIf="!hideEditButton" (click)="onEdit.emit()"
            data-kt-image-input-action="change" data-bs-toggle="tooltip" aria-label="Change avatar"
            data-bs-original-title="Change avatar" data-kt-initialized="1">
         <i class="ki-duotone ki-pencil fs-7"><span class="path1"></span><span class="path2"></span></i>
