@@ -1,8 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {
-  FormControlInputFieldContentParams,
-  FormControlInputFieldContentTextAreaParams
-} from '../../../form-control-input-field-content-params';
+import {FormControlInputFieldContentParams, FormControlTextAreaParams} from '../../../form-control-input-field-content-params';
 
 @Component({
   selector: 'app-form-control-input-field-content-text-area',
@@ -13,12 +10,12 @@ import {
 export class FormControlInputFieldContentTextAreaComponent {
 
   @Input({
-    transform: (value: FormControlInputFieldContentParams): FormControlInputFieldContentTextAreaParams => value as FormControlInputFieldContentTextAreaParams,
+    transform: (value: FormControlInputFieldContentParams): FormControlTextAreaParams => value as FormControlTextAreaParams,
     required: true
   })
-  set formControlInputFieldContentParams(value: FormControlInputFieldContentTextAreaParams) {
+  set formControlInputFieldContentParams(value: FormControlTextAreaParams) {
     this._formControlInputFieldContentParams = value;
   }
-  _formControlInputFieldContentParams: FormControlInputFieldContentTextAreaParams;
+  _formControlInputFieldContentParams: FormControlTextAreaParams;
 
 }

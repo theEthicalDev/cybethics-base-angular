@@ -1,4 +1,5 @@
-import {AfterContentInit, Component, ContentChildren, Input, OnDestroy, QueryList} from '@angular/core';
+import {Component, ContentChildren, Input, OnDestroy, QueryList} from '@angular/core';
+import {AfterContentInit} from '@angular/core';
 import {ExtraToastrService} from '../extra-toastr/extra-toastr.service';
 import {TabItemComponent} from './tab-item/tab-item.component';
 import {Subscription} from 'rxjs';
@@ -30,14 +31,18 @@ export class TabComponent implements AfterContentInit, OnDestroy {
   }
 
   ngAfterContentInit(): void {
-    // initial validation + set active
-    this.validateAndActivate();
-
-    // handle dynamic changes to the content children (add/remove tabs at runtime)
     this.tabItemsSub = this.tabItems.changes.subscribe(() => {
       this.validateAndActivate();
     });
+    this.setActiveTab(0);
   }
+
+  // ngAfterViewInit(): void {
+  //   // initial validation + set active
+  //   this.validateAndActivate();
+  //
+  //   // handle dynamic changes to the content children (add/remove tabs at runtime)
+  // }
 
   ngOnDestroy(): void {
     if (this.tabItemsSub) {
@@ -66,6 +71,7 @@ export class TabComponent implements AfterContentInit, OnDestroy {
     this.activeTab = targetTabIndex;
     this.tabItems.toArray().forEach((tabItem, i) => {
       tabItem.isActive = i === targetTabIndex;
+      console.log(`TabComponent: set tab index ${i} active=${tabItem.isActive}`);
     });
   }
 }

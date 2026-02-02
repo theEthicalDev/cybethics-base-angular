@@ -1,0 +1,194 @@
+<div class="card card-flush py-4">
+  <div class="card-header">
+    <div class="card-title">
+      <h2>{{ titleKey | translate }}</h2>
+    </div>
+    <div class="card-toolbar">
+      <button type="button" class="btn btn-light-primary btn-sm" (click)="addGroup()">
+        <i class="ki-duotone ki-plus fs-3"></i>
+        <span>{{ addGroupKey | translate }}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="card-body pt-0">
+    <div *ngIf="entityLinkedId && categoryControl?.value === 'TICKET'" class="alert alert-warning d-flex align-items-center p-4 mb-4">
+      <i class="bi bi-exclamation-triangle fs-2x me-3"></i>
+      <span>{{ syncWarningKey | translate }}</span>
+    </div>
+
+    <ng-container *ngIf="(getOptionGroupsControls()?.length || 0) === 0">
+      <div class="text-muted">No option groups defined.</div>
+    </ng-container>
+
+    <ng-container *ngIf="(getOptionGroupsControls()?.length || 0) > 0">
+      <app-tab [class]="'w-100'" *ngIf="getOptionGroupsControls().length > 0" [minTabs]="0" [maxTabs]="50">
+        <app-tab-item *ngFor="let groupCtrl of getOptionGroupsControls(); let gi = index"
+                      [title]="Translation.from(findGroupTranslationFormGroup(groupCtrl)?.get('name')?.value || ('Option group ' + (gi + 1)))"
+                      [hasError]="groupCtrl.invalid && (groupCtrl.dirty || groupCtrl.touched)">
+
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+<!--              <div class="fw-bold">{{ helpers.findGroupTranslation ? (helpers.findGroupTranslation(groupCtrl, languages && languages.length ? languages[0].lang : 'en').get('name')?.value) : ('Option group ' + (gi + 1)) }}</div>-->
+              <div class="fw-bold">{{ findGroupTranslationFormGroup(groupCtrl)?.get('name')?.value || ('Option group ' + (gi + 1)) }}</div>
+              <div class="text-muted fs-7">Group id: {{ getGroup(gi).get('id')?.value || 'new' }}</div>
+            </div>
+            <div class="d-flex gap-2">
+              <button type="button" class="btn btn-sm btn-outline-secondary" (click)="moveGroupUp(gi)">
+                <app-keenicon name="arrow-up" class="fs-1"></app-keenicon>
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-secondary" (click)="moveGroupDown(gi)">
+                <app-keenicon name="arrow-down" class="fs-1"></app-keenicon>
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeGroup(gi)">
+                <app-keenicon name="trash" class="fs-1" color="text-danger"></app-keenicon>
+              </button>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <app-form-control-row>
+              <app-form-control-column>
+                <app-form-control
+                  *ngIf="helpers.FormControlTextParams && helpers.fc"
+                  [labelParams]="helpers.FormControlInputFieldLabelParams ? helpers.FormControlInputFieldLabelParams.from(optionGroupNameKey) : null"
+                  [contentParams]="helpers.FormControlTextParams ? helpers.FormControlTextParams.from(helpers.fc(groupCtrl, 'translations')?.value?.[0]?.name) : null">
+                </app-form-control>
+              </app-form-control-column>
+              <app-form-control-column>
+                <app-form-control *ngIf="helpers.FormControlSwitchParams"
+                  [labelParams]="helpers.FormControlInputFieldLabelParams ? helpers.FormControlInputFieldLabelParams.from(optionGroupUseStockKey) : null"
+                  [contentParams]="helpers.FormControlSwitchParams ? helpers.FormControlSwitchParams.from(getGroup(gi).get('useStock')) : null">
+                </app-form-control>
+              </app-form-control-column>
+            </app-form-control-row>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold mb-2">Pricing Mode</label>
+            <div class="row gx-2">
+              <div class="col-4">
+                <label class="btn btn-outline btn-outline-dashed d-flex justify-content-between text-start p-3 h-100 active btn-outline-primary"
+                       (click)="setGroupPricingStrategy(gi, 'FIXED')"
+                       [ngClass]="{'btn-outline-secondary': !((getGroup(gi).get('pricingStrategy')?.value ?? 'FIXED') === 'FIXED')}">
+                  <div class="d-flex align-items-center">
+                    <span class="me-3"><app-keenicon name="dollar" class="fs-2hx text-primary"></app-keenicon></span>
+                    <span>
+                      <span class="fs-6 fw-bold">Fixed Price</span>
+                      <div class="text-muted fs-7">Each option defines an absolute unit price that replaces the inherited price.</div>
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div class="col-4">
+                <label class="btn btn-outline btn-outline-dashed d-flex justify-content-between text-start p-3 h-100 active btn-outline-primary"
+                       (click)="setGroupPricingStrategy(gi, 'MULTIPLIER')"
+                       [ngClass]="{'btn-outline-secondary': !((getGroup(gi).get('pricingStrategy')?.value ?? 'MULTIPLIER') === 'MULTIPLIER')}">
+                  <div class="d-flex align-items-center">
+                    <span class="me-3"><app-keenicon name="cross" class="fs-2hx text-warning"></app-keenicon></span>
+                    <span>
+                      <span class="fs-6 fw-bold">Multiplier</span>
+                      <div class="text-muted fs-7">Multiply the base price by a factor (e.g. 1.25 for +25%).</div>
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div class="col-4">
+                <label class="btn btn-outline btn-outline-dashed d-flex justify-content-between text-start p-3 h-100 active btn-outline-primary"
+                       (click)="setGroupPricingStrategy(gi, 'ADDITIVE')"
+                       [ngClass]="{'btn-outline-secondary': !((getGroup(gi).get('pricingStrategy')?.value ?? 'ADDITIVE') === 'ADDITIVE')}">
+                  <div class="d-flex align-items-center">
+                    <span class="me-3"><app-keenicon name="plus" class="fs-2hx text-success"></app-keenicon></span>
+                    <span>
+                      <span class="fs-6 fw-bold">Additive Adjustment</span>
+                      <div class="text-muted fs-7">Add or subtract a fixed value to the base price per option.</div>
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3" *ngIf="getGroup(gi).get('pricingStrategy')?.value === 'MULTIPLIER'">
+            <app-form-control *ngIf="helpers.FormControlNumberParams"
+              [labelParams]="helpers.FormControlInputFieldLabelParams ? helpers.FormControlInputFieldLabelParams.from('PRODUCT.OPTION_GROUP.BASE_PRICE') : null"
+              [contentParams]="helpers.FormControlNumberParams ? helpers.FormControlNumberParams.from(getGroup(gi).get('multiplierBasePrice')) : null"></app-form-control>
+            <div class="form-label text-muted fw-semibold mt-3 mb-1">Base Price for Multiplier</div>
+            <div class="form-text text-muted mb-2">The base price is used to calculate the final option price when using the Multiplier pricing mode.</div>
+          </div>
+
+          <hr/>
+
+          <div class="mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div class="fw-semibold">Options</div>
+              <div>
+                <button type="button" class="btn btn-light btn-sm" (click)="addOption(gi)" *ngIf="getGroup(gi).get('useOptions')?.value">
+                  <i class="ki-duotone ki-plus fs-3"></i>
+                  <span>{{ optionAddKey | translate }}</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="options-list" (dragover)="onOptionDragOver($event)" (drop)="onOptionDropToGroup($event, gi)">
+              <div class="list-group">
+                <ng-container *ngFor="let optCtrl of getOptionsControls(gi); let oi = index">
+                  <div class="list-group-item d-flex align-items-center gap-2 py-2" draggable="true"
+                       (dragstart)="onOptionDragStart($event, gi, oi)" (dragover)="onOptionDragOver($event)" (drop)="onOptionDrop($event, gi, oi)">
+                    <div class="image-input image-input-outline image-input-placeholder mt-1 image-input-changed cursor-default col-1" (click)="$event.stopPropagation()" data-kt-image-input="true">
+                      <div class="image-input-wrapper w-75px h-75px bgi-position-y-center" [style.background-size]="'contain'" [style]="'background-image: url(' + (optCtrl.get('thumbnail')?.value || '') + ');'"></div>
+                      <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" (click)="optionThumbInput.click()" data-kt-image-input-action="change" aria-label="Change image">
+                        <i class="ki-duotone ki-pencil fs-7"></i>
+                      </label>
+                      <input type="file" accept="image/*" class="d-none" #optionThumbInput (change)="addOptionThumbnail($event, gi, oi)"/>
+                    </div>
+
+                    <div class="col-4">
+                      <app-form-control *ngIf="helpers.FormControlTextParams && helpers.fc" [labelParams]="helpers.FormControlInputFieldLabelParams ? helpers.FormControlInputFieldLabelParams.from(optionNameKey) : null" [contentParams]="helpers.FormControlTextParams ? helpers.FormControlTextParams.from(helpers.findOptionTranslation(optCtrl, languages && languages.length ? languages[0].lang : 'en').get('name')) : null"></app-form-control>
+                    </div>
+
+                    <div class="col-4">
+                      <ng-container [ngSwitch]="getGroup(gi).get('pricingStrategy')?.value" class="w-100">
+                        <div *ngSwitchCase="'UNIT_PRICE'" class="row">
+                          <app-form-control class="col-6" *ngIf="helpers.FormControlNumberParams" [labelParams]="helpers.FormControlInputFieldLabelParams ? helpers.FormControlInputFieldLabelParams.from(optionFixedPriceKey) : null" [contentParams]="helpers.FormControlNumberParams ? helpers.FormControlNumberParams.from(optCtrl.get('fixedPrice'), '10.00', helpers.FormControlInputFieldContentParamIcon.fromKeenIcon(null, 'dollar')) : null"></app-form-control>
+                        </div>
+                        <div *ngSwitchCase="'MULTIPLIER'" class="row">
+                          <app-form-control class="col-5" *ngIf="helpers.FormControlNumberParams" [labelParams]="helpers.FormControlInputFieldLabelParams ? helpers.FormControlInputFieldLabelParams.from(optionMultiplierKey) : null" [contentParams]="helpers.FormControlNumberParams ? helpers.FormControlNumberParams.from(optCtrl.get('multiplier'), '1.00', helpers.FormControlInputFieldContentParamIcon.fromKeenIcon(null, 'cross')) : null"></app-form-control>
+                          <div class="col-7 d-flex align-items-center">
+                            <span class="text-muted mt-6">{{ ((getGroup(gi).get('multiplierBasePrice')?.value || 1) | number:'1.2-2') + ' x ' + (optCtrl.get('multiplier')?.value || 1) + ' = ' + (((getGroup(gi).get('multiplierBasePrice')?.value || 1) * (optCtrl.get('multiplier')?.value || 1) | number:'1.2-2')) }}</span>
+                          </div>
+                        </div>
+                        <div *ngSwitchCase="'ADDITIVE'" class="row">
+                          <app-form-control class="col-6" *ngIf="helpers.FormControlNumberParams" [labelParams]="helpers.FormControlInputFieldLabelParams ? helpers.FormControlInputFieldLabelParams.from(optionDeltaKey) : null" [contentParams]="helpers.FormControlNumberParams ? helpers.FormControlNumberParams.from(optCtrl.get('deltaValue'), '5.00', helpers.FormControlInputFieldContentParamIcon.fromKeenIcon(null, 'plus')) : null"></app-form-control>
+                          <div class="col-6 d-flex align-items-center"><span class="text-muted mt-6">{{ ((getGroup(gi).get('basePrice')?.value || 0) | number:'1.2-2') + ' + ' + (optCtrl.get('deltaValue')?.value || 0) + ' = ' + (((getGroup(gi).get('basePrice')?.value || 0) + (optCtrl.get('deltaValue')?.value || 0)) | number:'1.2-2') }}</span></div>
+                        </div>
+<!--                        <app-form-control *ngIf="helpers.FormControlNumberParams" [labelParams]="helpers.FormControlInputFieldLabelParams ? helpers.FormControlInputFieldLabelParams.from(optionPriceKey) : null" [contentParams]="helpers.FormControlNumberParams ? helpers.FormControlNumberParams.from(optCtrl.get('unitPrice')) : null"></app-form-control>-->
+                      </ng-container>
+                    </div>
+
+                    <div class="col-2">
+                      <app-form-control *ngIf="helpers.FormControlNumberParams && getGroup(gi).get('useStock')?.value" [labelParams]="helpers.FormControlInputFieldLabelParams ? helpers.FormControlInputFieldLabelParams.from(optionStockKey) : null" [contentParams]="helpers.FormControlNumberParams ? helpers.FormControlNumberParams.from(optCtrl.get('stock')) : null"></app-form-control>
+                    </div>
+
+                    <div class="col-1 pb-1 align-self-end">
+                      <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeOption(gi, oi)">
+                        <app-keenicon name="trash" class="fs-1" color="text-danger-emphasis"></app-keenicon>
+                      </button>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+
+        </app-tab-item>
+      </app-tab>
+    </ng-container>
+
+    <div *ngIf="getOptionGroupsControls()?.length === 0" class="text-center py-10 text-gray-500">
+      <i class="ki-duotone ki-information fs-3x mb-3"></i>
+      <p>{{ noOptionGroupsKey | translate }}</p>
+    </div>
+
+  </div>
+</div>
