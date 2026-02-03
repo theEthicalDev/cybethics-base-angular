@@ -2,6 +2,12 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormGroup} from '@angular/forms';
 import {ImageLoadService} from 'src/app/shared/image/load/image-load.service';
 import {Translation} from 'src/app/shared/translation/translation';
+import {FormControlSwitchParams} from 'src/app/shared/form-control/input-field/form-control-input-field-content-params';
+import {FormControlNumberParams} from 'src/app/shared/form-control/input-field/form-control-input-field-content-params';
+import {FormControlTextParams} from 'src/app/shared/form-control/input-field/form-control-input-field-content-params';
+import {fc} from 'src/app/shared/form-control/form-control-helper';
+import {FormControlLabelParams} from 'src/app/shared/form-control/input-field/label/form-control-label-params';
+import {FormControlParamIcon} from 'src/app/shared/form-control/input-field/form-control-param-icon';
 
 @Component({
   selector: 'app-calculable-option-groups',
@@ -237,7 +243,7 @@ export class CalculableOptionGroupsComponent implements OnInit {
   }
 
   // Translation helpers for option/group name
-  findOptionTranslationFormGroup(optCtrl: AbstractControl, language: string): FormGroup {
+  findOptionTranslationFormGroup(optCtrl: AbstractControl, language: string = 'de'): FormGroup {
     const translationsFormArray = optCtrl.get('translations') as FormArray;
     const found = translationsFormArray.controls.find((c: any) => c.value.language === language) as FormGroup;
     return found ?? (translationsFormArray.controls[0] as FormGroup);
@@ -304,4 +310,10 @@ export class CalculableOptionGroupsComponent implements OnInit {
   }
 
   protected readonly Translation = Translation;
+  protected readonly FormControlSwitchParams = FormControlSwitchParams;
+  protected readonly fc = fc;
+  protected readonly FormControlLabelParams = FormControlLabelParams;
+  protected readonly FormControlNumberParams = FormControlNumberParams;
+  protected readonly FormControlParamIcon = FormControlParamIcon;
+  protected readonly FormControlTextParams = FormControlTextParams;
 }

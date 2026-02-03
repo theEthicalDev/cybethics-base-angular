@@ -1,6 +1,6 @@
 import {Observable} from 'rxjs';
 
-export class FormControlInputFieldContentParamIcon {
+export class FormControlParamIcon {
   public type: 'keenIcon' | 'bootstrap';
   public icon: string;
   public color: string;
@@ -14,8 +14,8 @@ export class FormControlInputFieldContentParamIcon {
                              color: string | null = null,
                              model: string | null = null
   ):
-    FormControlInputFieldContentParamIcon {
-    const keenIcon = new FormControlInputFieldContentParamIcon();
+    FormControlParamIcon {
+    const keenIcon = new FormControlParamIcon();
     keenIcon.type = 'keenIcon';
     keenIcon.icon = icon;
     keenIcon.cssClass = cssClass ?? 'fs-2 ' + (subscription ? ' clickable ' : '');

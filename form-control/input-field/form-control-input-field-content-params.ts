@@ -7,7 +7,7 @@ import {
   StandardFormControlInputFieldDropdownStyling
 } from 'src/app/shared/form-control/input-field/content/form-control-input-field-label-styling';
 import {FormControlInputFieldStyling} from 'src/app/shared/form-control/input-field/form-control-input-field-styling';
-import {FormControlInputFieldContentParamIcon} from 'src/app/shared/form-control/input-field/form-control-input-field-content-param-icon';
+import {FormControlParamIcon} from 'src/app/shared/form-control/input-field/form-control-param-icon';
 import {CountryCode, DachRegionCountryCode} from './utils/constants/country-code';
 import {MaritalStatus} from 'src/app/shared/form-control/input-field/utils/constants/marital-status';
 import {SwissVisa} from 'src/app/shared/form-control/input-field/utils/constants/swiss-visa';
@@ -18,12 +18,12 @@ export abstract class FormControlInputFieldContentParams {
   public formControl: FormControl<any>;
   public type: FormControlInputFieldContentType;
   public styling: FormControlInputFieldContentStyling;
-  public icon: FormControlInputFieldContentParamIcon | null;
+  public icon: FormControlParamIcon | null;
 
   protected constructor(formControl: FormControl<any>,
                         type: FormControlInputFieldContentType,
                         styling: FormControlInputFieldContentStyling = new StandardFormControlInputFieldContentStyling(),
-                        icon: FormControlInputFieldContentParamIcon | null = null) {
+                        icon: FormControlParamIcon | null = null) {
     this.formControl = formControl;
     this.type = type;
     this.styling = styling;
@@ -38,16 +38,16 @@ export class FormControlTextParams extends FormControlInputFieldContentParams {
 
   placeholder: Translation;
 
-  constructor(formControl: FormControl<any>, placeHolder: Translation, styling: FormControlInputFieldStyling | null, icon: FormControlInputFieldContentParamIcon | null = null) {
+  constructor(formControl: FormControl<any>, placeHolder: Translation, styling: FormControlInputFieldStyling | null, icon: FormControlParamIcon | null = null) {
     super(formControl, FormControlInputFieldContentType.TEXT, styling ?? new StandardFormControlInputFieldContentStyling(), icon);
     this.placeholder = placeHolder;
   }
 
   public static from(abstractControl: AbstractControl): FormControlTextParams;
   public static from(abstractControl: AbstractControl, placeHolder: string): FormControlTextParams;
-  public static from(abstractControl: AbstractControl, placeHolder: string, icon: FormControlInputFieldContentParamIcon | null): FormControlTextParams;
+  public static from(abstractControl: AbstractControl, placeHolder: string, icon: FormControlParamIcon | null): FormControlTextParams;
   public static from(abstractControl: AbstractControl, placeHolder: string): FormControlTextParams;
-  public static from(abstractControl: AbstractControl, placeHolder?: string, icon?: FormControlInputFieldContentParamIcon | null): FormControlTextParams {
+  public static from(abstractControl: AbstractControl, placeHolder?: string, icon?: FormControlParamIcon | null): FormControlTextParams {
     const formControl: FormControl<any> = abstractControl as FormControl<any>;
     const placeHolderInstance = placeHolder ? new Translation(placeHolder) : new PlaceholderDefaultTranslation();
     return new FormControlTextParams(formControl, placeHolderInstance, null, icon);
@@ -58,16 +58,16 @@ export class FormControlPasswordParams extends FormControlInputFieldContentParam
 
   placeholder: Translation;
 
-  constructor(formControl: FormControl<any>, placeHolder: Translation, styling: FormControlInputFieldStyling | null, icon: FormControlInputFieldContentParamIcon | null = null) {
+  constructor(formControl: FormControl<any>, placeHolder: Translation, styling: FormControlInputFieldStyling | null, icon: FormControlParamIcon | null = null) {
     super(formControl, FormControlInputFieldContentType.PASSWORD, styling ?? new StandardFormControlInputFieldContentStyling(), icon);
     this.placeholder = placeHolder;
   }
 
   public static from(abstractControl: AbstractControl): FormControlPasswordParams;
   public static from(abstractControl: AbstractControl, placeHolder: string): FormControlPasswordParams;
-  public static from(abstractControl: AbstractControl, placeHolder: string, icon: FormControlInputFieldContentParamIcon): FormControlPasswordParams;
+  public static from(abstractControl: AbstractControl, placeHolder: string, icon: FormControlParamIcon): FormControlPasswordParams;
   public static from(abstractControl: AbstractControl, placeHolder: string): FormControlPasswordParams;
-  public static from(abstractControl: AbstractControl, placeHolder?: string, icon?: FormControlInputFieldContentParamIcon): FormControlPasswordParams {
+  public static from(abstractControl: AbstractControl, placeHolder?: string, icon?: FormControlParamIcon): FormControlPasswordParams {
     const formControl: FormControl<any> = abstractControl as FormControl<any>;
     const placeHolderInstance = placeHolder ? new Translation(placeHolder) : new PlaceholderDefaultTranslation();
     return new FormControlPasswordParams(formControl, placeHolderInstance, null, icon);
@@ -81,7 +81,7 @@ export class FormControlNumberParams extends FormControlInputFieldContentParams 
 
   placeholder: Translation;
 
-  constructor(formControl: FormControl<any>, placeHolder: Translation, styling: FormControlInputFieldStyling, icon: FormControlInputFieldContentParamIcon | null = null) {
+  constructor(formControl: FormControl<any>, placeHolder: Translation, styling: FormControlInputFieldStyling, icon: FormControlParamIcon | null = null) {
     super(formControl, FormControlInputFieldContentType.NUMBER, styling ?? new StandardFormControlInputFieldContentStyling(), icon);
     this.placeholder = placeHolder;
   }
@@ -89,8 +89,8 @@ export class FormControlNumberParams extends FormControlInputFieldContentParams 
   public static from(abstractControl: AbstractControl): FormControlTextParams;
   public static from(abstractControl: AbstractControl, placeholder: string): FormControlTextParams;
   public static from(abstractControl: AbstractControl, placeholder?: string): FormControlTextParams
-  public static from(abstractControl: AbstractControl, placeholder: string, icon: FormControlInputFieldContentParamIcon): FormControlTextParams;
-  public static from(abstractControl: AbstractControl, placeholder?: string, icon?: FormControlInputFieldContentParamIcon): FormControlTextParams {
+  public static from(abstractControl: AbstractControl, placeholder: string, icon: FormControlParamIcon): FormControlTextParams;
+  public static from(abstractControl: AbstractControl, placeholder?: string, icon?: FormControlParamIcon): FormControlTextParams {
     const formControl: FormControl<any> = abstractControl as FormControl<any>;
     const placeholderInstance = placeholder ? new Translation(placeholder) : new PlaceholderDefaultTranslation();
     return new FormControlNumberParams(formControl, placeholderInstance, new StandardFormControlInputFieldContentStyling(), icon);
@@ -104,7 +104,7 @@ export class FormControlTextAreaParams extends FormControlInputFieldContentParam
 
   placeholder: Translation;
 
-  constructor(formControl: FormControl<any>, placeHolder: Translation, styling: FormControlInputFieldStyling | null, icon: FormControlInputFieldContentParamIcon | null = null) {
+  constructor(formControl: FormControl<any>, placeHolder: Translation, styling: FormControlInputFieldStyling | null, icon: FormControlParamIcon | null = null) {
     super(formControl, FormControlInputFieldContentType.TEXTAREA, styling ?? new StandardFormControlInputFieldContentStyling(), icon);
     this.placeholder = placeHolder;
   }
@@ -112,8 +112,8 @@ export class FormControlTextAreaParams extends FormControlInputFieldContentParam
   public static from(abstractControl: AbstractControl): FormControlTextParams;
   public static from(abstractControl: AbstractControl, placeHolder: string): FormControlTextParams;
   public static from(abstractControl: AbstractControl, placeHolder?: string): FormControlTextParams;
-  public static from(abstractControl: AbstractControl, placeHolder: string, icon: FormControlInputFieldContentParamIcon | null): FormControlTextParams
-  public static from(abstractControl: AbstractControl, placeHolder?: string, icon?: FormControlInputFieldContentParamIcon | null): FormControlTextParams {
+  public static from(abstractControl: AbstractControl, placeHolder: string, icon: FormControlParamIcon | null): FormControlTextParams
+  public static from(abstractControl: AbstractControl, placeHolder?: string, icon?: FormControlParamIcon | null): FormControlTextParams {
     const formControl: FormControl<any> = abstractControl as FormControl<any>;
     const placeHolderInstance = placeHolder ? new Translation(placeHolder) : new PlaceholderDefaultTranslation();
     return new FormControlTextAreaParams(formControl, placeHolderInstance, null, icon);
