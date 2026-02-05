@@ -30,11 +30,13 @@ export class CalculableOptionGroupsComponent implements OnInit {
   @Input() optionNameKey = 'PRODUCT.OPTION.NAME';
   @Input() optionFixedPriceKey = 'PRODUCT.OPTION.FIXED_PRICE';
   @Input() optionMultiplierKey = 'PRODUCT.OPTION.MULTIPLIER';
+  @Input() optionQuantityEnumerationKey = 'PRODUCT.OPTION.QUANTITY_ENUMERATION';
   @Input() optionDeltaKey = 'PRODUCT.OPTION.DELTA_ABSOLUTE';
   @Input() optionPriceKey = 'PRODUCT.OPTION.PRICE';
   @Input() optionStockKey = 'PRODUCT.OPTION.STOCK';
   @Input() optionGroupNameKey = 'PRODUCT.OPTION_GROUP.NAME';
   @Input() optionGroupUseStockKey = 'PRODUCT.OPTION_GROUP.USE_STOCK';
+  @Input() optionGroupRepresentsAmountKey = 'PRODUCT.OPTION_GROUP.AMOUNT';
 
   // factory functions provided by parent to create new group/option form groups
   @Input() createGroup!: () => FormGroup;
@@ -50,7 +52,8 @@ export class CalculableOptionGroupsComponent implements OnInit {
 
   constructor(private imageLoadService: ImageLoadService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   // Helpers
   getOptionGroupsControls() {
@@ -111,24 +114,6 @@ export class CalculableOptionGroupsComponent implements OnInit {
     this.updatePositionFields(options);
   }
 
-  moveOptionUp(groupIndex: number, optionIndex: number) {
-    if (optionIndex <= 0) return;
-    const options = (this.getGroup(groupIndex).get('options') as FormArray);
-    const ctrl = options.at(optionIndex);
-    options.removeAt(optionIndex);
-    options.insert(optionIndex - 1, ctrl);
-    this.updatePositionFields(options);
-  }
-
-  moveOptionDown(groupIndex: number, optionIndex: number) {
-    const options = (this.getGroup(groupIndex).get('options') as FormArray);
-    if (optionIndex >= options.length - 1) return;
-    const ctrl = options.at(optionIndex);
-    options.removeAt(optionIndex);
-    options.insert(optionIndex + 1, ctrl);
-    this.updatePositionFields(options);
-  }
-
   updatePositionFields(arr: FormArray) {
     for (let i = 0; i < arr.length; i++) {
       const g = arr.at(i);
@@ -143,13 +128,6 @@ export class CalculableOptionGroupsComponent implements OnInit {
       const options = (this.getGroup(groupIndex).get('options') as FormArray);
       const option = options.at(optionIndex);
       option.get('thumbnail')?.setValue(base64.result);
-    });
-  }
-
-  addGroupThumbnail(event: Event, groupIndex: number) {
-    this.imageLoadService.loadBase64Images(event, (base64) => {
-      const group = this.getGroup(groupIndex);
-      group.get('thumbnail')?.setValue(base64.result);
     });
   }
 
@@ -256,59 +234,6 @@ export class CalculableOptionGroupsComponent implements OnInit {
   }
 
   // Basic preview computation - mirrors parent but uses provided baseUnitPriceControl if set
-  computeOptionUnitContributionForUi(optCtrl: AbstractControl, parentBase: number): number {
-    const pricingStrategy = optCtrl.get('pricingStrategy')?.value || 'INHERIT';
-    if (pricingStrategy === 'FIXED') {
-      return Number(optCtrl.get('fixedPrice')?.value) || 0;
-    } else if (pricingStrategy === 'DELTA_ABSOLUTE') {
-      return Number(optCtrl.get('deltaValue')?.value) || 0;
-    } else if (pricingStrategy === 'DELTA_PERCENT') {
-      const dv = Number(optCtrl.get('deltaValue')?.value) || 0;
-      return dv * parentBase / 100.0;
-    } else if (pricingStrategy === 'MULTIPLIER') {
-      const base = Number(optCtrl.get('unitPrice')?.value) || 0;
-      const mult = Number(optCtrl.get('multiplier')?.value) || 1;
-      const qty = Number(optCtrl.get('quantity')?.value) || 1;
-      return base * (mult - 1.0) * qty;
-    } else {
-      const base = Number(optCtrl.get('unitPrice')?.value) || 0;
-      const mult = Number(optCtrl.get('multiplier')?.value) || 1;
-      const qty = Number(optCtrl.get('quantity')?.value) || 1;
-      return base * mult * qty;
-    }
-  }
-
-  computeGroupPreview(groupIndex: number): string {
-    try {
-      const productPrice = this.baseUnitPriceControl?.value || 0;
-      const group = this.getGroup(groupIndex);
-      const groupBase = group.get('unitPrice')?.value ?? productPrice;
-      const options = group.get('options') as FormArray | null;
-      let total = 0;
-      if (options) {
-        for (let i = 0; i < options.length; i++) {
-          total += this.computeOptionUnitContributionForUi(options.at(i), groupBase);
-        }
-      }
-      const pstrat = group.get('pricingStrategy')?.value || 'INHERIT';
-      if (pstrat === 'FIXED') {
-        total = Number(group.get('fixedPrice')?.value) || 0;
-      } else if (pstrat === 'DELTA_ABSOLUTE') {
-        total = Number(group.get('deltaValue')?.value) || 0;
-      } else if (pstrat === 'DELTA_PERCENT') {
-        const dv = Number(group.get('deltaValue')?.value) || 0;
-        total = dv * groupBase / 100.0;
-      } else if (pstrat === 'MULTIPLIER') {
-        const mult = Number(group.get('multiplier')?.value) || 1;
-        const inner = (group.get('unitPrice')?.value ?? groupBase) + total;
-        total = inner * (mult - 1.0);
-      }
-      return total.toFixed(2);
-    } catch (e) {
-      return '0.00';
-    }
-  }
-
   protected readonly Translation = Translation;
   protected readonly FormControlSwitchParams = FormControlSwitchParams;
   protected readonly fc = fc;
