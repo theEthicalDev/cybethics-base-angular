@@ -182,7 +182,7 @@
 
                                         <div class="col-4">
                                             <ng-container [ngSwitch]="getGroup(gi).get('pricingStrategy')?.value" class="w-100">
-                                                <div *ngSwitchCase="'UNIT_PRICE'" class="row">
+                                                <div *ngSwitchCase="'FIXED'" class="row">
                                                     <app-form-control class="col-6"
                                                                       [labelParams]="FormControlLabelParams.from(optionFixedPriceKey)"
                                                                       [contentParams]="FormControlNumberParams.from(fc(optCtrl, 'fixedPrice'), '10.00', FormControlParamIcon.fromKeenIcon(null, 'dollar'))"></app-form-control>
