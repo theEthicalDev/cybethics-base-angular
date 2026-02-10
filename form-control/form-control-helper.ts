@@ -101,7 +101,7 @@ function getLastEntries(errors: any, path: string[] = [], translateService: Tran
       // Only push the second last part of the path
       const string = newPath[newPath.length - 2];
       let translatedKey: string;
-      translatedKey = translateService.instant(translateKeyPrefix, { value: string.toUpperCase()});
+      translatedKey = translateService.instant(translateKeyPrefix, {value: string.toUpperCase()});
       if (translatedKey.startsWith(translateKeyPrefix)) {
         const regex = /([a-z])([A-Z])/g;
         const replacement = '$1_$2';
@@ -132,7 +132,7 @@ function getControl<T extends AbstractControl>(name: string, controlFactory: () 
   }
 }
 
-export function formatDateTime(date: Date | undefined, format: string = 'yyyy-MM-ddTHH:mm'): string | undefined {
+export function formatDateTime(date: Date | undefined, format: string = 'yyyy-MM-ddTHH:mm:ss', locale: string = 'de-CH'): string | undefined {
   return formatDateValue(date, format);
 }
 
@@ -141,4 +141,46 @@ export function formatDateValue(date: Date | undefined, format: string = 'yyyy-M
     return formatDate(date, format, locale);
   }
   return undefined;
+}
+
+/**
+ * Returns an ISO 8601 string including the local timezone offset, e.g. 2026-02-09T10:05:49+01:00
+ * Use this when sending datetimes to the backend so the server receives an absolute instant with the client's offset.
+ */
+export function formatDateToIsoWithOffset(date: Date | undefined): string | undefined {
+  if (!date) return undefined;
+
+  const pad = (n: number) => n < 10 ? '0' + n : String(n);
+
+  const year = date.getFullYear();
+  const month = pad(date.getMonth() + 1);
+  const day = pad(date.getDate());
+  const hours = pad(date.getHours());
+  const minutes = pad(date.getMinutes());
+  const seconds = pad(date.getSeconds());
+
+  // getTimezoneOffset returns minutes to add to local time to get UTC, so invert sign to get offset from UTC
+  const offsetMinutes = -date.getTimezoneOffset();
+  const sign = offsetMinutes >= 0 ? '+' : '-';
+  const absOffsetMinutes = Math.abs(offsetMinutes);
+  const offsetHours = pad(Math.floor(absOffsetMinutes / 60));
+  const offsetMins = pad(absOffsetMinutes % 60);
+
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}${sign}${offsetHours}:${offsetMins}`;
+}
+
+/**
+ * If you have an HTML <input type="datetime-local"> value (which is timezone-less, e.g. "2026-02-09T10:30"),
+ * use this to convert it to an ISO string with the user's timezone offset for backend storage.
+ * Example: toBackendIsoFromLocalString('2026-02-09T10:30') -> '2026-02-09T10:30:00+01:00' (when user's offset is +01:00)
+ */
+export function toBackendIsoFromLocalString(localDateTime: string | undefined): string | undefined {
+  if (!localDateTime) return undefined;
+  // Create a Date by splitting the local string and using Date constructor with local parts
+  // Avoids ambiguity across environments -- construct with Date(year, monthIndex, day, hour, minute, second)
+  const match = localDateTime.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2}))?$/);
+  if (!match) return undefined;
+  const [, y, m, d, hh, mm, ss] = match;
+  const date = new Date(Number(y), Number(m) - 1, Number(d), Number(hh), Number(mm), ss ? Number(ss) : 0);
+  return formatDateToIsoWithOffset(date);
 }
